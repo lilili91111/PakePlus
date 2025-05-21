@@ -1,22 +1,1097 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="stylesheet" href="styles.css" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>PakePlus App</title>
-        <script type="module" src="/main.js" defer></script>
-    </head>
+<html lang="zh-CN">
 
-    <body>
-        <main class="container">
-            <h1>Welcome to PakePlus</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9117888就要一起发发发</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        accent: '#8B5CF6',
+                        neutral: '#6B7280',
+                        "neutral-light": '#F3F4F6',
+                        "neutral-dark": '#1F2937',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .number-grid {
+                display: grid;
+                grid-template-columns: repeat(10, minmax(0, 1fr));
+                gap: 0.5rem;
+            }
+            .result-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+                gap: 0.5rem;
+            }
+            .btn-primary {
+                @apply bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5;
+            }
+            .btn-clear {
+                @apply border border-neutral text-neutral hover:bg-neutral-light font-medium py-1 px-3 rounded-lg transition-all duration-200 text-sm;
+            }
+            .number-btn {
+                @apply py-1.5 px-2 rounded-lg transition-all duration-200 font-medium text-sm;
+            }
+            .number-btn-selected {
+                @apply bg-primary text-white;
+            }
+            .number-btn-unselected {
+                @apply bg-white border border-neutral-light text-neutral-dark hover:bg-neutral-light;
+            }
+            .badge {
+                @apply inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium rounded-full;
+            }
+            .badge-primary {
+                @apply bg-primary/10 text-primary;
+            }
+            .card {
+                @apply bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden;
+            }
+            .tool-container {
+                @apply mb-4;
+            }
+            .result-container {
+                @apply card p-4 bg-white rounded-xl shadow-md;
+            }
+            .function-section {
+                @apply mb-6;
+            }
+            .btn-clear-selected {
+                @apply bg-primary text-white;
+            }
+            #shapeButtons {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 5px;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
 
-            <form class="row" id="greet-form">
-                <input id="greet-input" placeholder="Enter a name..." />
-                <button type="submit">Greet</button>
-            </form>
-            <p id="greet-msg"></p>
-        </main>
-    </body>
+<body class="font-inter bg-gray-50 text-neutral-dark min-h-screen flex flex-col">
+    <!-- 导航栏 -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-calculator text-primary text-2xl"></i>
+                <h1 class="text-xl font-bold text-neutral-dark">就要一起发发发</h1>
+            </div>
+            
+            <!-- 使用 ml-[200px] 设置固定间距 -->
+            <div class="flex items-center space-x-4 ml-[-100px]">
+                <a href="yuce.html" class="text-lg font-bold text-primary hover:text-primary transition-colors">ai预测</a>
+            </div>
+
+
+            <div class="flex items-center space-x-4 ml-[-800px]">
+                <a href="index.html" class="text-lg font-bold text-primary hover:text-primary transition-colors">缩水工具</a>
+            </div>
+            
+            <span class="text-sm text-neutral">软件下载官网：bbs.9117888.com</span>
+        </div>
+    </header>
+
+
+    
+
+    <!-- 广告位 -->
+    <!-- <div class="w-full my-6 flex justify-center">
+        <div class="w-[95%] h-[120px] overflow-hidden rounded-md shadow-md">
+            <a href="https://www.baidu.com" target="_blank">
+                <img src="https://picnew13.photophoto.cn/20190430/zisechangtiaoxinglatiaokuang-33090509_1.jpg" alt="广告图片" class="w-full h-full object-contain object-center">
+            </a>
+        </div>
+    </div> -->
+
+    <div class="w-full my-6 flex justify-center">
+        <div class="w-[95%] h-[120px] overflow-hidden rounded-md shadow-md flex justify-center items-center">
+            <a href="https://www.baidu.com" target="_blank">
+                <span class="text-center text-3xl font-bold">广告位招租</span>
+            </a>
+        </div>
+    </div>
+
+
+
+    <!-- 主内容区 -->
+    <main class="flex-grow container mx-auto px-4 py-6 flex flex-col">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-grow">
+            <!-- 左侧：功能区 -->
+            <div class="lg:col-span-4">
+                <div class="card p-5 h-full flex flex-col">
+                    <!-- <h2 class="text-xl font-bold text-neutral-dark mb-4">选择条件</h2> -->
+
+                    <!-- 杀和尾工具 -->
+                    <div class="tool-container">
+                        <h3 class="text-base font-semibold mb-2 flex items-center">
+                            <i class="fa-solid fa-plus-circle text-primary mr-1.5"></i>
+                            杀和尾
+                        </h3>
+                        <div class="mb-2">
+                            <div id="sum-numbers" class="number-grid"></div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-neutral">已选数字:</span>
+                            <div class="flex items-center">
+                                <!-- 添加全选按钮 -->
+                                <button id="select-all-sum" class="btn-clear mr-2">
+                                    <i class="fa-solid fa-check mr-1"></i>
+                                    全选
+                                </button>
+                                <span id="sum-selected-count" class="badge badge-primary mr-2"></span>
+                                <button id="clear-sum" class="btn-clear">
+                                    <i class="fa-solid fa-eraser mr-1"></i>
+                                    清除
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 杀跨度工具 -->
+                    <div class="tool-container">
+                        <h3 class="text-base font-semibold mb-2 flex items-center">
+                            <i class="fa-solid fa-arrows-alt-h text-primary mr-1.5"></i>
+                            杀跨度
+                        </h3>
+                        <div class="mb-2">
+                            <div id="span-numbers" class="number-grid"></div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-neutral">已选数字:</span>
+                            <div class="flex items-center">
+                                <!-- 添加全选按钮 -->
+                                <button id="select-all-span" class="btn-clear mr-2">
+                                    <i class="fa-solid fa-check mr-1"></i>
+                                    全选
+                                </button>
+                                <span id="span-selected-count" class="badge badge-primary mr-2"></span>
+                                <button id="clear-span" class="btn-clear">
+                                    <i class="fa-solid fa-eraser mr-1"></i>
+                                    清除
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 胆码工具 -->
+                    <div class="tool-container">
+                        <h3 class="text-base font-semibold mb-2 flex items-center">
+                            <i class="fa-solid fa-key text-primary mr-1.5"></i>
+                            胆码
+                        </h3>
+                        <div class="mb-2">
+                            <div id="code-numbers" class="number-grid"></div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-neutral">已选数字:</span>
+                            <div class="flex items-center">
+                                <span id="code-selected-count" class="badge badge-primary mr-2"></span>
+                                <button id="clear-code" class="btn-clear">
+                                    <i class="fa-solid fa-eraser mr-1"></i>
+                                    清除
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="code-filter-container" class="mt-3 hidden">
+                            <label class="block text-sm font-medium text-neutral mb-1.5">选择胆码类型:</label>
+                            <div class="flex gap-2">
+                                <button id="code-filter-1" class="btn-clear">1胆</button>
+                                <button id="code-filter-2" class="btn-clear">2胆</button>
+                                <button id="code-filter-3" class="btn-clear">3胆</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 排除复式工具 -->
+                    <div class="tool-container">
+                        <h3 class="text-base font-semibold mb-2 flex items-center">
+                            <i class="fa-solid fa-ban text-primary mr-1.5"></i>
+                            排除复式
+                        </h3>
+                        <div class="mb-2">
+                            <div id="exclude-hundred-numbers" class="number-grid"></div>
+
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-neutral">已选百位数字:</span>
+                                <div class="flex items-center">
+                                    <span id="exclude-hundred-selected-count" class="badge badge-primary mr-2"></span>
+                                    <button id="clear-exclude-hundred" class="btn-clear">
+                                        <i class="fa-solid fa-eraser mr-1"></i>
+                                        清除
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="exclude-ten-numbers" class="number-grid mt-2"></div>
+
+                            <div class="flex items-center justify-between mt-2">
+                                <span class="text-sm text-neutral">已选十位数字:</span>
+                                <div class="flex items-center">
+                                    <span id="exclude-ten-selected-count" class="badge badge-primary mr-2"></span>
+                                    <button id="clear-exclude-ten" class="btn-clear">
+                                        <i class="fa-solid fa-eraser mr-1"></i>
+                                        清除
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="exclude-one-numbers" class="number-grid mt-2"></div>
+
+                            <div class="flex items-center justify-between mt-2">
+                                <span class="text-sm text-neutral">已选个位数字:</span>
+                                <div class="flex items-center">
+                                    <span id="exclude-one-selected-count" class="badge badge-primary mr-2"></span>
+                                    <button id="clear-exclude-one" class="btn-clear">
+                                        <i class="fa-solid fa-eraser mr-1"></i>
+                                        清除
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <!-- 定位杀工具 -->
+                    <div class="tool-container">
+                        <h3 class="text-base font-semibold mb-2 flex items-center">
+                            <i class="fa-solid fa-xmark text-primary mr-1.5"></i>
+                            定位杀
+                        </h3>
+                        <div class="mb-2">
+                            <div id="kill-hundred-numbers" class="number-grid"></div>
+
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-neutral">已选百位数字:</span>
+                                <div class="flex items-center">
+                                    <span id="kill-hundred-selected-count" class="badge badge-primary mr-2"></span>
+                                    <button id="clear-kill-hundred" class="btn-clear">
+                                        <i class="fa-solid fa-eraser mr-1"></i>
+                                        清除
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="kill-ten-numbers" class="number-grid mt-2"></div>
+
+                            <div class="flex items-center justify-between mt-2">
+                                <span class="text-sm text-neutral">已选十位数字:</span>
+                                <div class="flex items-center">
+                                    <span id="kill-ten-selected-count" class="badge badge-primary mr-2"></span>
+                                    <button id="clear-kill-ten" class="btn-clear">
+                                        <i class="fa-solid fa-eraser mr-1"></i>
+                                        清除
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="kill-one-numbers" class="number-grid mt-2"></div>
+
+                            <div class="flex items-center justify-between mt-2">
+                                <span class="text-sm text-neutral">已选个位数字:</span>
+                                <div class="flex items-center">
+                                    <span id="kill-one-selected-count" class="badge badge-primary mr-2"></span>
+                                    <button id="clear-kill-one" class="btn-clear">
+                                        <i class="fa-solid fa-eraser mr-1"></i>
+                                        清除
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <!-- 预留功能区域 -->
+                    <!-- <div class="mt-4 p-3 border border-dashed border-gray-300 rounded-lg bg-gray-50 flex-grow flex items-center justify-center">
+                        <span class="text-neutral">预留功能区域</span>
+                    </div> -->
+                </div>
+            </div>
+
+            <!-- 中间：附加功能区 -->
+            <div class="lg:col-span-4 hidden lg:block">
+                <div class="card p-5 h-full flex flex-col">
+                    <!-- <h2 class="text-xl font-bold text-neutral-dark mb-4">附加功能</h2> -->
+
+                    <!-- 杀形态排列功能 -->
+                    <div class="p-4 border border-dashed border-gray-300 rounded-lg bg-gray-50 flex flex-col items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-4xl text-neutral-light mb-2">
+                                <i class="fa-solid fa-sliders"></i>
+                            </div>
+                            <p class="text-neutral">杀形态排列</p>
+                        </div>
+                        <div class="flex flex-wrap justify-center gap-2 mt-3">
+                            <div class="flex flex-wrap justify-center gap-2 w-full">
+                                <button id="kill-pattern-1" class="btn-clear">大大大</button>
+                                <button id="kill-pattern-2" class="btn-clear">大大小</button>
+                                <button id="kill-pattern-3" class="btn-clear">大小大</button>
+                                <button id="kill-pattern-4" class="btn-clear">大小小</button>
+                            </div>
+                            <div class="flex flex-wrap justify-center gap-2 w-full">
+                                <button id="kill-pattern-5" class="btn-clear">小小小</button>
+                                <button id="kill-pattern-6" class="btn-clear">小小大</button>
+                                <button id="kill-pattern-7" class="btn-clear">小大小</button>
+                                <button id="kill-pattern-8" class="btn-clear">小大大</button>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between w-full mt-3">
+                            <span class="text-sm text-neutral">已选大小形态:</span>
+                            <div class="flex items-center">
+                                <!-- 添加全选按钮 -->
+                                <button id="select-all-kill-patterns" class="btn-clear mr-2">
+                                    <i class="fa-solid fa-check mr-1"></i>
+                                    全选
+                                </button>
+                                <span id="kill-patterns-selected-count" class="badge badge-primary mr-2"></span>
+                                <button id="clear-kill-patterns" class="btn-clear">
+                                    <i class="fa-solid fa-eraser mr-1"></i>
+                                    清除
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 新增奇偶形态排列按钮组 -->
+                        <div class="flex flex-wrap justify-center gap-2 mt-4">
+                            <div class="flex flex-wrap justify-center gap-2 w-full">
+                                <button id="kill-odd-even-pattern-1" class="btn-clear">奇奇奇</button>
+                                <button id="kill-odd-even-pattern-2" class="btn-clear">奇奇偶</button>
+                                <button id="kill-odd-even-pattern-3" class="btn-clear">奇偶奇</button>
+                                <button id="kill-odd-even-pattern-4" class="btn-clear">奇偶偶</button>
+                            </div>
+                            <div class="flex flex-wrap justify-center gap-2 w-full">
+                                <button id="kill-odd-even-pattern-5" class="btn-clear">偶偶偶</button>
+                                <button id="kill-odd-even-pattern-6" class="btn-clear">偶偶奇</button>
+                                <button id="kill-odd-even-pattern-7" class="btn-clear">偶奇偶</button>
+                                <button id="kill-odd-even-pattern-8" class="btn-clear">偶奇奇</button>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between w-full mt-3">
+                            <span class="text-sm text-neutral">已选奇偶形态:</span>
+                            <div class="flex items-center">
+                                <!-- 添加全选按钮 -->
+                                <button id="select-all-kill-odd-even-patterns" class="btn-clear mr-2">
+                                    <i class="fa-solid fa-check mr-1"></i>
+                                    全选
+                                </button>
+                                <span id="kill-odd-even-patterns-selected-count" class="badge badge-primary mr-2"></span>
+                                <button id="clear-kill-odd-even-patterns" class="btn-clear">
+                                    <i class="fa-solid fa-eraser mr-1"></i>
+                                    清除
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 新增质合形态排列按钮组 -->
+                        <div class="flex flex-wrap justify-center gap-2 mt-4">
+                            <div class="flex flex-wrap justify-center gap-2 w-full">
+                                <button id="kill-prime-composite-pattern-1" class="btn-clear">质质质</button>
+                                <button id="kill-prime-composite-pattern-2" class="btn-clear">质质合</button>
+                                <button id="kill-prime-composite-pattern-3" class="btn-clear">质合质</button>
+                                <button id="kill-prime-composite-pattern-4" class="btn-clear">质合合</button>
+                            </div>
+                            <div class="flex flex-wrap justify-center gap-2 w-full">
+                                <button id="kill-prime-composite-pattern-5" class="btn-clear">合合合</button>
+                                <button id="kill-prime-composite-pattern-6" class="btn-clear">合合质</button>
+                                <button id="kill-prime-composite-pattern-7" class="btn-clear">合质合</button>
+                                <button id="kill-prime-composite-pattern-8" class="btn-clear">合质质</button>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between w-full mt-3">
+                            <span class="text-sm text-neutral">已选质合形态:</span>
+                            <div class="flex items-center">
+                                <!-- 添加全选按钮 -->
+                                <button id="select-all-kill-prime-composite-patterns" class="btn-clear mr-2">
+                                    <i class="fa-solid fa-check mr-1"></i>
+                                    全选
+                                </button>
+                                <span id="kill-prime-composite-patterns-selected-count" class="badge badge-primary mr-2"></span>
+                                <button id="clear-kill-prime-composite-patterns" class="btn-clear">
+                                    <i class="fa-solid fa-eraser mr-1"></i>
+                                    清除
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <!-- 功能扩展区2 -->
+                    <div class="p-4 border border-dashed border-gray-300 rounded-lg bg-gray-50 flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-4xl text-neutral-light mb-2">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                </div>
+                                <p class="text-neutral">012路排除</p>
+                                <div id="shapeButtons">
+                                    <!-- 手动添加 27 个按钮 -->
+                                    <button type="button" id="000" data-value="000" class="btn-clear">000</button>
+                                    <button type="button" id="001" data-value="001" class="btn-clear">001</button>
+                                    <button type="button" id="002" data-value="002" class="btn-clear">002</button>
+                                    <button type="button" id="010" data-value="010" class="btn-clear">010</button>
+                                    <button type="button" id="011" data-value="011" class="btn-clear">011</button>
+                                    <button type="button" id="012" data-value="012" class="btn-clear">012</button>
+                                    <button type="button" id="020" data-value="020" class="btn-clear">020</button>
+                                    <button type="button" id="021" data-value="021" class="btn-clear">021</button>
+                                    <button type="button" id="022" data-value="022" class="btn-clear">022</button>
+                                    <button type="button" id="100" data-value="100" class="btn-clear">100</button>
+                                    <button type="button" id="101" data-value="101" class="btn-clear">101</button>
+                                    <button type="button" id="102" data-value="102" class="btn-clear">102</button>
+                                    <button type="button" id="110" data-value="110" class="btn-clear">110</button>
+                                    <button type="button" id="111" data-value="111" class="btn-clear">111</button>
+                                    <button type="button" id="112" data-value="112" class="btn-clear">112</button>
+                                    <button type="button" id="120" data-value="120" class="btn-clear">120</button>
+                                    <button type="button" id="121" data-value="121" class="btn-clear">121</button>
+                                    <button type="button" id="122" data-value="122" class="btn-clear">122</button>
+                                    <button type="button" id="200" data-value="200" class="btn-clear">200</button>
+                                    <button type="button" id="201" data-value="201" class="btn-clear">201</button>
+                                    <button type="button" id="202" data-value="202" class="btn-clear">202</button>
+                                    <button type="button" id="210" data-value="210" class="btn-clear">210</button>
+                                    <button type="button" id="211" data-value="211" class="btn-clear">211</button>
+                                    <button type="button" id="212" data-value="212" class="btn-clear">212</button>
+                                    <button type="button" id="220" data-value="220" class="btn-clear">220</button>
+                                    <button type="button" id="221" data-value="221" class="btn-clear">221</button>
+                                    <button type="button" id="222" data-value="222" class="btn-clear">222</button>
+                                </div>
+                                <div class="mt-4">
+                                    <button type="button" id="selectAllButton" class="btn-clear">全选</button>
+                                    <button type="button" id="clearButton" class="btn-clear">清除</button>
+                                </div>
+                            </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                    <!-- 原预留功能区域 -->
+                    <div class="grid grid-cols-1 gap-4 flex-grow">
+
+                        <!-- <div class="p-4 border border-dashed border-gray-300 rounded-lg bg-gray-50 flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-4xl text-neutral-light mb-2">
+                                    <i class="fa-solid fa-cog"></i>
+                                </div>
+                                <p class="text-neutral">功能扩展区3</p>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：结果区 -->
+            <div class="lg:col-span-4">
+                <div class="card p-5 h-full flex flex-col">
+                    <h2 class="text-xl font-bold text-neutral-dark mb-4">结果显示</h2>
+
+                    <!-- 生成结果区域 -->
+                    <div id="result-container" class="result-container flex-grow mb-4 hidden">
+                        <div class="flex flex-wrap items-center justify-between mb-3">
+                            <h3 class="text-base font-semibold">生成结果</h3>
+                            <div class="flex items-center space-x-2">
+                                <div class="flex items-center space-x-1">
+                                    <span class="text-sm text-neutral">总数:</span>
+                                    <span id="result-count" class="font-medium"></span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <button id="copy-result" class="btn-clear flex items-center">
+                                        <i class="fa-solid fa-copy mr-1"></i>
+                                        复制
+                                    </button>
+                                    <button id="download-result" class="btn-clear flex items-center">
+                                        <i class="fa-solid fa-download mr-1"></i>
+                                        下载
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="overflow-auto max-h-[750px]">
+                            <div id="result-grid" class="result-grid"></div>
+                        </div>
+                    </div>
+
+                    <!-- 生成组合按钮 -->
+
+                    <div class="mt-auto flex justify-end space-x-4">
+                        <button id="clear-all-options" class="btn-primary flex items-center">
+                            <i class="fa-solid fa-eraser mr-2"></i>
+                            清除所有选项
+                        </button>
+                        <button id="generate-combinations" class="btn-primary flex items-center">
+                            <i class="fa-solid fa-magic mr-2"></i>
+                            生成组合
+                        </button>
+                    </div>
+
+
+                    <!-- 预留功能区域 -->
+                    <!-- <div class="mt-4 p-3 border border-dashed border-gray-300 rounded-lg bg-gray-50 flex items-center justify-center">
+                        <span class="text-neutral">预留功能区域</span>
+                    </div> -->
+                </div>
+
+
+               
+
+
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-white border-t border-gray-200 py-3">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-sm text-neutral mb-2 md:mb-0">
+                    © 2025 就要一起发发发 | bbs.9117888.com
+                </div>
+                <!-- <div class="flex space-x-4">
+                    <a href="#" class="text-neutral hover:text-primary transition-colors">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a href="#" class="text-neutral hover:text-primary transition-colors">
+                        <i class="fa-brands fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-neutral hover:text-primary transition-colors">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+                </div> -->
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // 初始化数字选择按钮
+        function initNumberButtons(containerId, count = 10) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            for (let i = 0; i < count; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.classList.add('number-btn', 'number-btn-unselected');
+                button.dataset.value = i;
+                button.dataset.selected = 'false';
+
+                button.addEventListener('click', function () {
+                    if (this.dataset.selected === 'false') {
+                        // 如果是未选中状态，点击后变为选中（蓝色）
+                        this.classList.remove('number-btn-unselected');
+                        this.classList.add('number-btn-selected');
+                        this.dataset.selected = 'true';
+                    } else {
+                        // 如果是选中状态，点击后变为未选中（白色）
+                        this.classList.remove('number-btn-selected');
+                        this.classList.add('number-btn-unselected');
+                        this.dataset.selected = 'false';
+                    }
+
+                    // 更新选中数量
+                    updateSelectedCount(containerId.replace('numbers', 'selected-count'));
+
+                    // 对于胆码工具，显示或隐藏胆码类型选择
+                    if (containerId === 'code-numbers') {
+                        const selectedCount = getSelectedNumbers('code-numbers').length;
+                        const filterContainer = document.getElementById('code-filter-container');
+
+                        if (selectedCount >= 1) {
+                            filterContainer.classList.remove('hidden');
+
+                            // 重置胆码类型按钮状态
+                            document.querySelectorAll('#code-filter-1, #code-filter-2, #code-filter-3').forEach(btn => {
+                                btn.classList.remove('bg-primary', 'text-white');
+                                btn.classList.add('border-primary', 'text-primary', 'hover:bg-primary/10');
+                            });
+
+                            // 根据选中数字数量启用/禁用胆码类型按钮
+                            document.getElementById('code-filter-1').disabled = false;
+                            document.getElementById('code-filter-2').disabled = selectedCount < 2;
+                            document.getElementById('code-filter-3').disabled = selectedCount < 3;
+
+                            // 如果只选了1个数字，默认选中1胆
+                            if (selectedCount === 1) {
+                                document.getElementById('code-filter-1').classList.remove('border-primary', 'text-primary', 'hover:bg-primary/10');
+                                document.getElementById('code-filter-1').classList.add('bg-primary', 'text-white');
+                            }
+                        } else {
+                            filterContainer.classList.add('hidden');
+                        }
+                    }
+                });
+
+                container.appendChild(button);
+            }
+        }
+
+        // 更新选中数字的数量
+        function updateSelectedCount(elementId) {
+            const containerId = elementId.replace('selected-count', 'numbers');
+            const count = getSelectedNumbers(containerId).length;
+            document.getElementById(elementId).textContent = count;
+        }
+
+        // 获取选中的数字
+        function getSelectedNumbers(containerId) {
+            const container = document.getElementById(containerId);
+            const selectedButtons = container.querySelectorAll('[data-selected="true"]');
+            return Array.from(selectedButtons).map(btn => parseInt(btn.dataset.value));
+        }
+
+        // 清除所有选择
+        function clearSelections(containerId) {
+            const container = document.getElementById(containerId);
+            const buttons = container.querySelectorAll('.number-btn');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('number-btn-selected');
+                btn.classList.add('number-btn-unselected');
+                btn.dataset.selected = 'false';
+            });
+
+            // 更新选中数量
+            updateSelectedCount(containerId.replace('numbers', 'selected-count'));
+
+            // 对于胆码工具，隐藏胆码类型选择
+            if (containerId === 'code-numbers') {
+                document.getElementById('code-filter-container').classList.add('hidden');
+            }
+        }
+
+        // 全选数字
+        function selectAllNumbers(containerId) {
+            const container = document.getElementById(containerId);
+            const buttons = container.querySelectorAll('.number-btn');
+
+            buttons.forEach(btn => {
+                if (btn.dataset.selected === 'false') {
+                    btn.classList.remove('number-btn-unselected');
+                    btn.classList.add('number-btn-selected');
+                    btn.dataset.selected = 'true';
+                }
+            });
+
+            // 更新选中数量
+            updateSelectedCount(containerId.replace('numbers', 'selected-count'));
+        }
+
+        // 初始化杀形态排列按钮
+        function initKillPatternButtons() {
+            const buttons = document.querySelectorAll('[id^="kill-pattern-"]');
+            buttons.forEach(btn => {
+                btn.dataset.selected = 'false';
+                btn.addEventListener('click', function () {
+                    if (this.dataset.selected === 'false') {
+                        this.classList.add('bg-primary', 'text-white');
+                        this.dataset.selected = 'true';
+                    } else {
+                        this.classList.remove('bg-primary', 'text-white');
+                        this.dataset.selected = 'false';
+                    }
+                    updateKillPatternSelectedCount();
+                });
+            });
+        }
+
+        // 更新杀形态排列选中数量
+        function updateKillPatternSelectedCount() {
+            const selectedCount = getSelectedKillPatterns().length;
+            document.getElementById('kill-patterns-selected-count').textContent = selectedCount;
+        }
+
+        // 获取选中的杀形态排列
+        function getSelectedKillPatterns() {
+            const buttons = document.querySelectorAll('[id^="kill-pattern-"]');
+            return Array.from(buttons).filter(btn => btn.dataset.selected === 'true').map(btn => btn.textContent);
+        }
+
+        // 初始化奇偶形态排列按钮
+        function initKillOddEvenPatternButtons() {
+            const buttons = document.querySelectorAll('[id^="kill-odd-even-pattern-"]');
+            buttons.forEach(btn => {
+                btn.dataset.selected = 'false';
+                btn.addEventListener('click', function () {
+                    if (this.dataset.selected === 'false') {
+                        this.classList.add('bg-primary', 'text-white');
+                        this.dataset.selected = 'true';
+                    } else {
+                        this.classList.remove('bg-primary', 'text-white');
+                        this.dataset.selected = 'false';
+                    }
+                    updateKillOddEvenPatternSelectedCount();
+                });
+            });
+        }
+
+        // 更新奇偶形态排列选中数量
+        function updateKillOddEvenPatternSelectedCount() {
+            const selectedCount = getSelectedKillOddEvenPatterns().length;
+            document.getElementById('kill-odd-even-patterns-selected-count').textContent = selectedCount;
+        }
+
+        // 获取选中的奇偶形态排列
+        function getSelectedKillOddEvenPatterns() {
+            const buttons = document.querySelectorAll('[id^="kill-odd-even-pattern-"]');
+            return Array.from(buttons).filter(btn => btn.dataset.selected === 'true').map(btn => btn.textContent);
+        }
+
+        // 初始化质合形态排列按钮
+        function initKillPrimeCompositePatternButtons() {
+            const buttons = document.querySelectorAll('[id^="kill-prime-composite-pattern-"]');
+            buttons.forEach(btn => {
+                btn.dataset.selected = 'false';
+                btn.addEventListener('click', function () {
+                    if (this.dataset.selected === 'false') {
+                        this.classList.add('bg-primary', 'text-white');
+                        this.dataset.selected = 'true';
+                    } else {
+                        this.classList.remove('bg-primary', 'text-white');
+                        this.dataset.selected = 'false';
+                    }
+                    updateKillPrimeCompositePatternSelectedCount();
+                });
+            });
+        }
+
+        // 更新质合形态排列选中数量
+        function updateKillPrimeCompositePatternSelectedCount() {
+            const selectedCount = getSelectedKillPrimeCompositePatterns().length;
+            document.getElementById('kill-prime-composite-patterns-selected-count').textContent = selectedCount;
+        }
+
+        // 获取选中的质合形态排列
+        function getSelectedKillPrimeCompositePatterns() {
+            const buttons = document.querySelectorAll('[id^="kill-prime-composite-pattern-"]');
+            return Array.from(buttons).filter(btn => btn.dataset.selected === 'true').map(btn => btn.textContent);
+        }
+
+        // 判断一个数是否为质数
+        function isPrime(num) {
+            if (num < 2) return false;
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i === 0) return false;
+            }
+            return true;
+        }
+
+        // 判断一个三位数的质合形态
+        function getPrimeCompositePattern(num) {
+            const digits = num.toString().split('').map(Number);
+            const pattern = digits.map(digit => isPrime(digit)? '质' : '合').join('');
+            return pattern;
+        }
+
+
+
+
+
+
+
+
+
+        // 定义012路对应的数字
+        const ROUTE_0 = [0, 3, 6, 9];
+        const ROUTE_1 = [1, 4, 7];
+        const ROUTE_2 = [2, 5, 8];
+
+        // 数字到路的映射
+        const NUM_TO_ROUTE = {};
+        ROUTE_0.forEach(num => NUM_TO_ROUTE[num] = 0);
+        ROUTE_1.forEach(num => NUM_TO_ROUTE[num] = 1);
+        ROUTE_2.forEach(num => NUM_TO_ROUTE[num] = 2);
+
+        function generate_all_combinations() {
+            const combinations = [];
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 10; j++) {
+                    for (let k = 0; k < 10; k++) {
+                        combinations.push(`${i}${j}${k}`);
+                    }
+                }
+            }
+            return combinations;
+        }
+
+        function get_route(num) {
+            return NUM_TO_ROUTE[parseInt(num)];
+        }
+
+        function filter_by_route_shape(combinations, exclude_shapes) {
+            return combinations.filter(comb => {
+                const routes = comb.split('').map(c => get_route(c));
+                const route_shape = routes.join('');
+                return !exclude_shapes.includes(route_shape);
+            });
+        }
+
+        // 给每个按钮添加点击事件
+        const shapeButtons = document.querySelectorAll('#shapeButtons button');
+        shapeButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                this.classList.toggle('btn-clear-selected');
+            });
+        });
+
+        // 全选按钮事件
+        document.getElementById('selectAllButton').addEventListener('click', function () {
+            shapeButtons.forEach(button => {
+                button.classList.add('btn-clear-selected');
+            });
+        });
+
+        // 清除按钮事件
+        document.getElementById('clearButton').addEventListener('click', function () {
+            shapeButtons.forEach(button => {
+                button.classList.remove('btn-clear-selected');
+            });
+        });
+
+
+
+
+        // 生成组合
+        function generateCombinations() {
+            // 获取所有可能的三位数组合
+            let combinations = [];
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 10; j++) {
+                    for (let k = 0; k < 10; k++) {
+                        combinations.push(`${i}${j}${k}`);
+                    }
+                }
+            }
+
+            // 应用杀和尾规则
+            const sumExclusions = getSelectedNumbers('sum-numbers');
+            combinations = combinations.filter(combination => {
+                const sum = combination.split('').reduce((acc, digit) => acc + parseInt(digit), 0);
+                return!sumExclusions.includes(sum % 10);
+            });
+
+            // 应用杀跨度规则
+            const spanExclusions = getSelectedNumbers('span-numbers');
+            combinations = combinations.filter(combination => {
+                const digits = combination.split('').map(Number);
+                const span = Math.max(...digits) - Math.min(...digits);
+                return!spanExclusions.includes(span);
+            });
+
+            // 应用胆码规则
+            const codeNumbers = getSelectedNumbers('code-numbers');
+            if (codeNumbers.length > 0) {
+                const codeFilter = document.querySelector('[id^="code-filter-"]:not([disabled]).bg-primary').id.replace('code-filter-', '');
+                combinations = combinations.filter(combination => {
+                    const digits = combination.split('').map(Number);
+                    const uniqueCodeDigits = digits.filter(digit => codeNumbers.includes(digit));
+                    return new Set(uniqueCodeDigits).size >= parseInt(codeFilter);
+                });
+            }
+
+            // 应用排除复式规则
+            const excludeHundredNumbers = getSelectedNumbers('exclude-hundred-numbers');
+            const excludeTenNumbers = getSelectedNumbers('exclude-ten-numbers');
+            const excludeOneNumbers = getSelectedNumbers('exclude-one-numbers');
+            combinations = combinations.filter(combination => {
+                const [hundred, ten, one] = combination.split('').map(Number);
+                return!(excludeHundredNumbers.includes(hundred) && excludeTenNumbers.includes(ten) && excludeOneNumbers.includes(one));
+            });
+
+            // 应用定位杀规则
+            const killHundredNumbers = getSelectedNumbers('kill-hundred-numbers');
+            const killTenNumbers = getSelectedNumbers('kill-ten-numbers');
+            const killOneNumbers = getSelectedNumbers('kill-one-numbers');
+            combinations = combinations.filter(combination => {
+                const [hundred, ten, one] = combination.split('').map(Number);
+                return!killHundredNumbers.includes(hundred) &&!killTenNumbers.includes(ten) &&!killOneNumbers.includes(one);
+            });
+
+            // 应用杀形态排列规则
+            const selectedKillPatterns = getSelectedKillPatterns();
+            combinations = combinations.filter(combination => {
+                const digits = combination.split('').map(Number);
+                const pattern = digits.map(digit => digit >= 5? '大' : '小').join('');
+                return!selectedKillPatterns.includes(pattern);
+            });
+
+            // 应用奇偶形态排列规则
+            const selectedKillOddEvenPatterns = getSelectedKillOddEvenPatterns();
+            combinations = combinations.filter(combination => {
+                const digits = combination.split('').map(Number);
+                const pattern = digits.map(digit => digit % 2 === 0? '偶' : '奇').join('');
+                return!selectedKillOddEvenPatterns.includes(pattern);
+            });
+
+            // 应用质合形态排列规则
+            const selectedKillPrimeCompositePatterns = getSelectedKillPrimeCompositePatterns();
+            combinations = combinations.filter(combination => {
+                const pattern = getPrimeCompositePattern(combination);
+                return!selectedKillPrimeCompositePatterns.includes(pattern);
+            });
+
+
+
+
+
+
+
+            // 应用012路排除规则
+            const selectedButtons = document.querySelectorAll('#shapeButtons button.btn-clear-selected');
+            const exclude_shapes = Array.from(selectedButtons).map(button => button.dataset.value);
+            if (exclude_shapes.length > 0) {
+                combinations = filter_by_route_shape(combinations, exclude_shapes);
+            }
+
+
+
+
+
+
+
+            // 显示结果
+            const resultContainer = document.getElementById('result-container');
+            const resultGrid = document.getElementById('result-grid');
+            const resultCount = document.getElementById('result-count');
+
+            resultGrid.innerHTML = '';
+            combinations.forEach(combination => {
+                const div = document.createElement('div');
+                div.textContent = combination;
+                resultGrid.appendChild(div);
+            });
+
+            resultCount.textContent = combinations.length;
+            resultContainer.classList.remove('hidden');
+        }
+
+
+        // 为清除所有选项按钮添加点击事件监听器
+        document.addEventListener('DOMContentLoaded', function() {
+            const clearAllButton = document.getElementById('clear-all-options');
+            if (clearAllButton) {
+                clearAllButton.addEventListener('click', function() {
+                    location.reload(); // 刷新当前页面
+                });
+            }
+        });
+
+
+
+
+
+        // 初始化页面
+        function init() {
+            initNumberButtons('sum-numbers');
+            initNumberButtons('span-numbers');
+            initNumberButtons('code-numbers');
+            initNumberButtons('exclude-hundred-numbers');
+            initNumberButtons('exclude-ten-numbers');
+            initNumberButtons('exclude-one-numbers');
+            initNumberButtons('kill-hundred-numbers');
+            initNumberButtons('kill-ten-numbers');
+            initNumberButtons('kill-one-numbers');
+            initKillPatternButtons();
+            initKillOddEvenPatternButtons();
+            initKillPrimeCompositePatternButtons();
+
+            document.getElementById('select-all-sum').addEventListener('click', () => selectAllNumbers('sum-numbers'));
+            document.getElementById('clear-sum').addEventListener('click', () => clearSelections('sum-numbers'));
+            document.getElementById('select-all-span').addEventListener('click', () => selectAllNumbers('span-numbers'));
+            document.getElementById('clear-span').addEventListener('click', () => clearSelections('span-numbers'));
+            document.getElementById('clear-code').addEventListener('click', () => clearSelections('code-numbers'));
+            document.getElementById('clear-exclude-hundred').addEventListener('click', () => clearSelections('exclude-hundred-numbers'));
+            document.getElementById('clear-exclude-ten').addEventListener('click', () => clearSelections('exclude-ten-numbers'));
+            document.getElementById('clear-exclude-one').addEventListener('click', () => clearSelections('exclude-one-numbers'));
+            document.getElementById('clear-kill-hundred').addEventListener('click', () => clearSelections('kill-hundred-numbers'));
+            document.getElementById('clear-kill-ten').addEventListener('click', () => clearSelections('kill-ten-numbers'));
+            document.getElementById('clear-kill-one').addEventListener('click', () => clearSelections('kill-one-numbers'));
+            document.getElementById('select-all-kill-patterns').addEventListener('click', () => {
+                const buttons = document.querySelectorAll('[id^="kill-pattern-"]');
+                buttons.forEach(btn => {
+                    if (btn.dataset.selected === 'false') {
+                        btn.classList.add('bg-primary', 'text-white');
+                        btn.dataset.selected = 'true';
+                    }
+                });
+                updateKillPatternSelectedCount();
+            });
+            document.getElementById('clear-kill-patterns').addEventListener('click', () => {
+                const buttons = document.querySelectorAll('[id^="kill-pattern-"]');
+                buttons.forEach(btn => {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.dataset.selected = 'false';
+                });
+                updateKillPatternSelectedCount();
+            });
+            document.getElementById('select-all-kill-odd-even-patterns').addEventListener('click', () => {
+                const buttons = document.querySelectorAll('[id^="kill-odd-even-pattern-"]');
+                buttons.forEach(btn => {
+                    if (btn.dataset.selected === 'false') {
+                        btn.classList.add('bg-primary', 'text-white');
+                        btn.dataset.selected = 'true';
+                    }
+                });
+                updateKillOddEvenPatternSelectedCount();
+            });
+            document.getElementById('clear-kill-odd-even-patterns').addEventListener('click', () => {
+                const buttons = document.querySelectorAll('[id^="kill-odd-even-pattern-"]');
+                buttons.forEach(btn => {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.dataset.selected = 'false';
+                });
+                updateKillOddEvenPatternSelectedCount();
+            });
+            document.getElementById('select-all-kill-prime-composite-patterns').addEventListener('click', () => {
+                const buttons = document.querySelectorAll('[id^="kill-prime-composite-pattern-"]');
+                buttons.forEach(btn => {
+                    if (btn.dataset.selected === 'false') {
+                        btn.classList.add('bg-primary', 'text-white');
+                        btn.dataset.selected = 'true';
+                    }
+                });
+                updateKillPrimeCompositePatternSelectedCount();
+            });
+            document.getElementById('clear-kill-prime-composite-patterns').addEventListener('click', () => {
+                const buttons = document.querySelectorAll('[id^="kill-prime-composite-pattern-"]');
+                buttons.forEach(btn => {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.dataset.selected = 'false';
+                });
+                updateKillPrimeCompositePatternSelectedCount();
+            });
+            document.getElementById('generate-combinations').addEventListener('click', generateCombinations);
+        }
+
+        window.onload = init;
+    </script>
+</body>
+
 </html>
