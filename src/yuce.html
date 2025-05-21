@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9117888就要一起发发发</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#64748B',
+                        accent: '#06B6D4',
+                        neutral: '#1E293B',
+                        'neutral-light': '#F8FAFC',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .transition-all-300 {
+                transition: all 0.3s ease;
+            }
+            .card-shadow {
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            }
+            .hover-scale {
+                transition: transform 0.2s;
+            }
+            .hover-scale:hover {
+                transform: scale(1.02);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-inter text-neutral min-h-screen flex flex-col">
+    <!-- 新增的加载提示元素 -->
+    <div id="analysis-loading" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded shadow-md z-50 hidden">
+        <p class="text-center">请稍等，人工智能正在分析中......</p>
+    </div>
+    <!-- 导航栏 -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-calculator text-primary text-2xl"></i>
+                <h1 class="text-xl font-bold text-neutral">就要一起发发发</h1>
+            </div>
+            
+            <!-- 使用 ml-[200px] 设置固定间距 -->
+            <div class="flex items-center space-x-4 ml-[-100px]">
+                <a href="yuce.html" class="text-lg font-bold text-primary hover:text-primary transition-colors">ai预测</a>
+            </div>
+
+
+            <div class="flex items-center space-x-4 ml-[-800px]">
+                <a href="index.html" class="text-lg font-bold text-primary hover:text-primary transition-colors">缩水工具</a>
+            </div>
+            
+            <span class="text-sm text-neutral">软件下载官网：bbs.9117888.com</span>
+            <!-- <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#input-section" class="text-neutral hover:text-primary transition-all-300 hidden">数据输入</a></li>
+                    <li><a href="#analysis-section" class="text-neutral hover:text-primary transition-all-300">模式分析</a></li>
+                    <li><a href="#generation-section" class="text-neutral hover:text-primary transition-all-300">数据生成</a></li>
+                </ul>
+            </nav> -->
+        </div>
+    </header>
+
+    <!-- 主要内容区 -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <!-- 数据生成区 -->
+        <section id="generation-section" class="mb-12 scroll-mt-20">
+            <div class="bg-white rounded-xl p-6 card-shadow hover-scale">
+                <h2 class="text-2xl font-bold mb-6 text-neutral flex items-center">
+                    <i class="fa-solid fa-magic-wand-sparkles text-primary mr-2"></i>四六分组数据生成
+                </h2>
+                <div class="bg-neutral-light rounded-lg p-6 mb-6">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-neutral mb-2">生成数量</label>
+                            <div class="flex items-center">
+                                <input type="number" id="generate-count" min="1" max="100" value="10" class="w-20 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all-300">
+                                <span class="ml-2 text-sm text-neutral">组</span>
+                            </div>
+                        </div>
+                        <!-- 新增一个 div 容器来包裹两个按钮 -->
+                        <div class="flex items-center gap-4">
+                            <button id="analyze-btn" class="bg-primary hover:bg-primary/90 text-white font-medium py-2 px-6 rounded-lg transition-all-300 flex items-center">
+                                <i class="fa-solid fa-play-circle mr-2"></i>ai分析
+                            </button>
+                            <button id="generate-btn" class="bg-accent hover:bg-accent/90 text-white font-medium py-2 px-6 rounded-lg transition-all-300 flex items-center">
+                                <i class="fa-solid fa-plus-circle mr-2"></i>生成数据
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="generated-results" class="bg-neutral-light rounded-lg p-6 hidden">
+                    <h3 class="font-semibold text-lg mb-4 text-neutral flex items-center">
+                        <i class="fa-solid fa-list-ol text-accent mr-2"></i>生成的四六分组数据
+                    </h3>
+                    <div id="generated-data" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+                        <!-- JavaScript 将填充此区域 -->
+                    </div>
+                    <div class="mt-6 flex justify-center">
+                        <button id="copy-btn" class="bg-secondary hover:bg-secondary/90 text-white font-medium py-2 px-6 rounded-lg transition-all-300 flex items-center">
+                            <i class="fa-solid fa-copy mr-2"></i>复制全部
+                        </button>
+                    </div>
+                </div>
+                <div id="no-generation" class="bg-neutral-light rounded-lg p-6 text-center">
+                    <i class="fa-solid fa-info-circle text-primary text-4xl mb-3"></i>
+                    <p class="text-neutral">请点击"生成数据"按钮生成符合模式的四六分组数据</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 数据输入区 -->
+        <section id="input-section" class="mb-12 scroll-mt-20 hidden">
+            <div class="bg-white rounded-xl p-6 card-shadow hover-scale">
+                <h2 class="text-2xl font-bold mb-4 text-neutral flex items-center">
+                    <i class="fa-solid fa-database text-primary mr-2"></i>数据输入
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-neutral mb-2">四六分组数据</label>
+                        <textarea id="input-data" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all-300" placeholder="输入四六分组数据，用逗号分隔，格式如：2367-014589,0369-124578">2367-014589,0369-124578,0189-234567,6789-012345,3456-012789,2367-014589,3456-012789,0123-456789,0189-234567,2457-013689,1458-023679,0369-124578,3456-012789,0369-124578,0245-136789,3457-012689,0278-134569,1236-045789,3679-012458,2356-014789,3578-012469,3468-012579,2346-015789,1237-045689,2357-014689,0378-124569,0127-345689,6789-012345,2469-013578,0139-245678,1678-023459,2578-013469,1269-034578,1279-034568,1458-023679,3456-012789,1247-035689,0358-124679,2789-013456,5789-012346,0278-134569,0348-125679,0459-123678,2345-016789</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-neutral mb-2">三元组数据</label>
+                        <textarea id="triple-data" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all-300" placeholder="输入三元组数据，用逗号分隔，格式如：657,500">657,500,403,417,915,030,338,388,826,022,658,159,135,317,649,068,385,542,714,707,953,016,161,370,877,015,752,027,407,841,914,270,954,635,375,206,320,849,621,315,912,120,488,725</textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 分析结果区 -->
+        <section id="analysis-section" class="mb-12 scroll-mt-20">
+            <div class="bg-white rounded-xl p-6 card-shadow hover-scale">
+                <h2 class="text-2xl font-bold mb-6 text-neutral flex items-center">
+                    <i class="fa-solid fa-chart-bar text-primary mr-2"></i>模式分析结果
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-neutral-light rounded-lg p-4">
+                        <h3 class="font-semibold text-lg mb-3 text-neutral flex items-center">
+                            <i class="fa-solid fa-pie-chart text-accent mr-2"></i>分布统计
+                        </h3>
+                        <div class="space-y-2">
+                            <div>
+                                <span class="text-sm text-neutral">2左1右分布：</span>
+                                <span id="dist-2l1r" class="font-semibold text-green-600">0</span>
+                                <span class="text-sm text-neutral"> (0%)</span>
+                            </div>
+                            <div>
+                                <span class="text-sm text-neutral">1左2右分布：</span>
+                                <span id="dist-1l2r" class="font-semibold text-blue-600">0</span>
+                                <span class="text-sm text-neutral"> (0%)</span>
+                            </div>
+                            <div>
+                                <span class="text-sm text-neutral">其他分布：</span>
+                                <span id="dist-other" class="font-semibold text-red-600">0</span>
+                                <span class="text-sm text-neutral"> (0%)</span>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <canvas id="distribution-chart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-neutral-light rounded-lg p-4">
+                        <h3 class="font-semibold text-lg mb-3 text-neutral flex items-center">
+                            <i class="fa-solid fa-table text-accent mr-2"></i>高频数字分析
+                        </h3>
+                        <div class="space-y-3">
+                            <div>
+                                <span class="text-sm text-neutral">左侧高频数字：</span>
+                                <div id="left-freq" class="flex flex-wrap gap-1 mt-1"></div>
+                            </div>
+                            <div>
+                                <span class="text-sm text-neutral">右侧高频数字：</span>
+                                <div id="right-freq" class="flex flex-wrap gap-1 mt-1"></div>
+                            </div>
+                            <div>
+                                <span class="text-sm text-neutral">中奖高频数字：</span>
+                                <div id="triple-freq" class="flex flex-wrap gap-1 mt-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 bg-neutral-light rounded-lg p-4">
+                    <h3 class="font-semibold text-lg mb-3 text-neutral flex items-center">
+                        <i class="fa-solid fa-list text-accent mr-2"></i>详细分析结果
+                    </h3>
+                    <div id="analysis-results" class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">序号</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">四六分组</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">奖号</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">左侧数字</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">右侧数字</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">分布类型</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">是否中奖</th>
+                                </tr>
+                            </thead>
+                            <tbody id="results-body" class="bg-white divide-y divide-gray-200">
+                                <!-- JavaScript 将填充此区域 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 新增的生成数据加载提示元素 -->
+    <div id="generating-loading" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded shadow-md z-50 hidden">
+        <p class="text-center">正在生成高中奖率组合，请稍等...</p>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="bg-neutral text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 就要一起发发发 | bbs.9117888.com</p>
+            <p class="text-sm mt-2 text-gray-400">本工具仅供学习和研究使用</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <script>
+        // 分析按钮点击事件
+        document.getElementById('analyze-btn').addEventListener('click', analyzeData);
+        
+        // 生成数据按钮点击事件
+        document.getElementById('generate-btn').addEventListener('click', generateData);
+        
+        // 复制按钮点击事件
+        document.getElementById('copy-btn').addEventListener('click', copyGeneratedData);
+        
+        // 全局变量存储分析结果
+        let analysisResults = null;
+        
+        // 分析数据函数
+        function analyzeData() {
+            // 显示加载提示
+            const loadingElement = document.getElementById('analysis-loading');
+            loadingElement.classList.remove('hidden');
+
+            // 2秒后隐藏加载提示
+            setTimeout(() => {
+                loadingElement.classList.add('hidden');
+            }, 2000);
+
+            // 获取输入数据
+            const inputData = document.getElementById('input-data').value.trim();
+            const tripleData = document.getElementById('triple-data').value.trim();
+            
+            // 验证输入
+            if (!inputData || !tripleData) {
+                alert('请输入四六分组数据和三元组数据');
+                return;
+            }
+            
+            // 解析数据
+            const dataPairs = parseData(inputData, tripleData);
+            if (dataPairs.length === 0) {
+                alert('数据解析失败，请检查输入格式');
+                return;
+            }
+            
+            // 分析数据
+            analysisResults = analyzePairs(dataPairs);
+            
+            // 显示分析结果
+            displayAnalysisResults(analysisResults);
+        }
+        
+        // 解析输入数据
+        function parseData(inputData, tripleData) {
+            const inputLines = inputData.split(',').filter(line => line.trim());
+            const tripleLines = tripleData.split(',').filter(line => line.trim());
+            
+            const minLength = Math.min(inputLines.length, tripleLines.length);
+            const pairs = [];
+            
+            for (let i = 0; i < minLength; i++) {
+                const inputLine = inputLines[i].trim();
+                const tripleLine = tripleLines[i].trim();
+                
+                // 验证格式
+                const inputMatch = inputLine.match(/^(\d{4})-(\d{6})$/);
+                const tripleMatch = tripleLine.match(/^\d{3}$/);
+                
+                if (inputMatch && tripleMatch) {
+                    pairs.push({
+                        left: inputMatch[1],
+                        right: inputMatch[2],
+                        triple: tripleMatch[0],
+                        index: i + 1
+                    });
+                }
+            }
+            
+            return pairs;
+        }
+        
+        // 分析数据对
+        function analyzePairs(pairs) {
+            const analysis = {
+                pairs: [],
+                distribution: {
+                    '2L1R': 0,
+                    '1L2R': 0,
+                    'other': 0
+                },
+                leftFreq: {},
+                rightFreq: {},
+                tripleFreq: {},
+                validCount: 0
+            };
+            
+            // 初始化频率计数器
+            for (let i = 0; i <= 9; i++) {
+                analysis.leftFreq[i] = 0;
+                analysis.rightFreq[i] = 0;
+                analysis.tripleFreq[i] = 0;
+            }
+            
+            // 分析每对数据
+            pairs.forEach(pair => {
+                const leftDigits = pair.left.split('');
+                const rightDigits = pair.right.split('');
+                const tripleDigits = pair.triple.split('');
+                
+                // 计算左侧、右侧和三元组中每个数字的频率
+                leftDigits.forEach(digit => analysis.leftFreq[digit]++);
+                rightDigits.forEach(digit => analysis.rightFreq[digit]++);
+                tripleDigits.forEach(digit => analysis.tripleFreq[digit]++);
+                
+                // 计算三元组中左侧和右侧数字的数量
+                const leftCount = tripleDigits.filter(digit => leftDigits.includes(digit)).length;
+                const rightCount = 3 - leftCount;
+                
+                // 确定分布类型
+                let distType = 'other';
+                let isValid = false;
+                
+                if (leftCount === 2 && rightCount === 1) {
+                    distType = '2L1R';
+                    analysis.distribution['2L1R']++;
+                    isValid = true;
+                } else if (leftCount === 1 && rightCount === 2) {
+                    distType = '1L2R';
+                    analysis.distribution['1L2R']++;
+                    isValid = true;
+                } else {
+                    analysis.distribution['other']++;
+                }
+                
+                analysis.pairs.push({
+                    ...pair,
+                    leftCount,
+                    rightCount,
+                    distType,
+                    isValid
+                });
+                
+                if (isValid) analysis.validCount++;
+            });
+            
+            // 计算频率百分比
+            analysis.confidence = (analysis.validCount / pairs.length * 100).toFixed(1);
+            
+            return analysis;
+        }
+        
+        // 生成符合模式的四六分组数据
+        function generateData() {
+            if (!analysisResults) {
+                alert('请先分析数据，以便了解模式规律');
+                return;
+            }
+
+            const count = parseInt(document.getElementById('generate-count').value) || 1;
+            if (count < 1 || count > 100) {
+                alert('请输入1 - 100之间的生成数量');
+                return;
+            }
+
+            // 显示加载提示
+            const loadingElement = document.getElementById('generating-loading');
+            loadingElement.classList.remove('hidden');
+
+            // 2秒后隐藏加载提示并继续执行生成数据的操作
+            setTimeout(() => {
+                loadingElement.classList.add('hidden');
+
+                // 基于分析结果生成数据
+                const generatedData = generatePairs(count, analysisResults);
+
+                // 显示生成结果
+                displayGeneratedData(generatedData);
+            }, 2000);
+        }
+        
+        // 生成符合模式的四六分组数据对
+        function generatePairs(count, analysis) {
+            const generated = [];
+            
+            // 获取高频数字
+            const sortedLeftFreq = Object.entries(analysis.leftFreq)
+                .sort((a, b) => b[1] - a[1])
+                .map(([digit]) => digit);
+                
+            const sortedRightFreq = Object.entries(analysis.rightFreq)
+                .sort((a, b) => b[1] - a[1])
+                .map(([digit]) => digit);
+            
+            for (let i = 0; i < count; i++) {
+                // 生成左侧4位数字（包含高频数字）
+                let leftDigits = [];
+                
+                // 至少包含1个高频数字
+                if (sortedLeftFreq.length > 0) {
+                    leftDigits.push(sortedLeftFreq[Math.floor(Math.random() * Math.min(3, sortedLeftFreq.length))]);
+                }
+                
+                // 随机生成剩余数字，确保不重复
+                while (leftDigits.length < 4) {
+                    const digit = Math.floor(Math.random() * 10).toString();
+                    if (!leftDigits.includes(digit)) {
+                        leftDigits.push(digit);
+                    }
+                }
+                
+                // 打乱顺序
+                leftDigits = shuffleArray(leftDigits);
+                
+                // 生成右侧6位数字（左侧数字的补集）
+                const allDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+                const rightDigits = allDigits.filter(digit => !leftDigits.includes(digit));
+                
+                // 打乱右侧数字顺序
+                const shuffledRight = shuffleArray(rightDigits);
+                
+                // 生成左侧和右侧字符串
+                const left = leftDigits.join('');
+                const right = shuffledRight.join('');
+                
+                generated.push(`${left}-${right}`);
+            }
+            
+            return generated;
+        }
+        
+        // 打乱数组顺序
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+        
+        // 显示分析结果
+        function displayAnalysisResults(analysis) {
+            // 更新分布统计
+            const total = analysis.pairs.length;
+            document.getElementById('dist-2l1r').textContent = analysis.distribution['2L1R'];
+            document.getElementById('dist-1l2r').textContent = analysis.distribution['1L2R'];
+            document.getElementById('dist-other').textContent = analysis.distribution['other'];
+            
+            document.getElementById('dist-2l1r').nextElementSibling.textContent = 
+                ` (${((analysis.distribution['2L1R'] / total) * 100).toFixed(1)}%)`;
+            document.getElementById('dist-1l2r').nextElementSibling.textContent = 
+                ` (${((analysis.distribution['1L2R'] / total) * 100).toFixed(1)}%)`;
+            document.getElementById('dist-other').nextElementSibling.textContent = 
+                ` (${((analysis.distribution['other'] / total) * 100).toFixed(1)}%)`;
+            
+            // 创建分布图表
+            createDistributionChart(analysis);
+            
+            // 显示高频数字
+            displayFrequencyNumbers(analysis);
+            
+            // 显示详细结果
+            displayDetailedResults(analysis);
+        }
+        
+        // 创建分布图表
+        function createDistributionChart(analysis) {
+            const ctx = document.getElementById('distribution-chart').getContext('2d');
+            
+            // 销毁已存在的图表
+            if (window.distributionChart) {
+                window.distributionChart.destroy();
+            }
+            
+            // 创建新图表
+            window.distributionChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['2左1右', '1左2右', '其他分布'],
+                    datasets: [{
+                        data: [
+                            analysis.distribution['2L1R'],
+                            analysis.distribution['1L2R'],
+                            analysis.distribution['other']
+                        ],
+                        backgroundColor: [
+                            '#10B981', // 绿色
+                            '#3B82F6', // 蓝色
+                            '#EF4444'  // 红色
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const total = analysis.pairs.length;
+                                    const percentage = ((value / total) * 100).toFixed(1);
+                                    return `${label}: ${value} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 显示高频数字
+        function displayFrequencyNumbers(analysis) {
+            // 左侧高频数字
+            const leftFreqEl = document.getElementById('left-freq');
+            leftFreqEl.innerHTML = '';
+            
+            Object.entries(analysis.leftFreq)
+                .sort((a, b) => b[1] - a[1])
+                .filter(([digit, count]) => count > 0)
+                .forEach(([digit, count]) => {
+                    const span = document.createElement('span');
+                    span.className = 'bg-primary/10 text-primary px-2 py-1 rounded text-sm';
+                    span.textContent = `${digit}: ${count}`;
+                    leftFreqEl.appendChild(span);
+                });
+            
+            // 右侧高频数字
+            const rightFreqEl = document.getElementById('right-freq');
+            rightFreqEl.innerHTML = '';
+            
+            Object.entries(analysis.rightFreq)
+                .sort((a, b) => b[1] - a[1])
+                .filter(([digit, count]) => count > 0)
+                .forEach(([digit, count]) => {
+                    const span = document.createElement('span');
+                    span.className = 'bg-accent/10 text-accent px-2 py-1 rounded text-sm';
+                    span.textContent = `${digit}: ${count}`;
+                    rightFreqEl.appendChild(span);
+                });
+            
+            // 三元组高频数字
+            const tripleFreqEl = document.getElementById('triple-freq');
+            tripleFreqEl.innerHTML = '';
+            
+            Object.entries(analysis.tripleFreq)
+                .sort((a, b) => b[1] - a[1])
+                .filter(([digit, count]) => count > 0)
+                .forEach(([digit, count]) => {
+                    const span = document.createElement('span');
+                    span.className = 'bg-secondary/10 text-secondary px-2 py-1 rounded text-sm';
+                    span.textContent = `${digit}: ${count}`;
+                    tripleFreqEl.appendChild(span);
+                });
+        }
+        
+        // 显示详细结果
+        function displayDetailedResults(analysis) {
+            const resultsBody = document.getElementById('results-body');
+            resultsBody.innerHTML = '';
+
+            // 逆序遍历 analysis.pairs 数组
+            for (let i = analysis.pairs.length - 1; i >= 0; i--) {
+                const pair = analysis.pairs[i];
+                const row = document.createElement('tr');
+                row.className = pair.isValid ? 'bg-green-50' : 'bg-red-50';
+
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${pair.index}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${pair.left}-${pair.right}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">${pair.triple}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${pair.left}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${pair.right}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm ${pair.distType === '2L1R' ? 'text-green-600' : pair.distType === '1L2R' ? 'text-blue-600' : 'text-red-600'}">
+                        ${pair.distType === '2L1R' ? '2左1右' : pair.distType === '1L2R' ? '1左2右' : '其他'}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm ${pair.isValid ? 'text-green-600' : 'text-red-600'}">
+                        ${pair.isValid ? '<i class="fa-solid fa-check-circle"></i> 是' : '<i class="fa-solid fa-times-circle"></i> 否'}
+                    </td>
+                `;
+
+                resultsBody.appendChild(row);
+            }
+        }
+        
+        // 显示生成的结果
+        function displayGeneratedData(generatedData) {
+            const generatedResults = document.getElementById('generated-results');
+            const generatedDataEl = document.getElementById('generated-data');
+            const noGeneration = document.getElementById('no-generation');
+            
+            // 隐藏提示，显示结果
+            noGeneration.classList.add('hidden');
+            generatedResults.classList.remove('hidden');
+            
+            // 清空现有结果
+            generatedDataEl.innerHTML = '';
+            
+            // 添加生成的数据
+            generatedData.forEach((data, index) => {
+                const item = document.createElement('div');
+                item.className = 'bg-white p-3 rounded-lg shadow-sm hover-scale';
+                
+                // 分割左侧和右侧
+                const [left, right] = data.split('-');
+                
+                item.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-medium text-neutral">#${index + 1}</span>
+                        <span class="text-xs text-gray-500">匹配概率高</span>
+                    </div>
+                    <div class="mt-2 flex justify-between">
+                        <span class="text-lg font-semibold text-primary">${left}</span>
+                        <span class="text-lg text-gray-600">-</span>
+                        <span class="text-lg font-semibold text-accent">${right}</span>
+                    </div>
+                `;
+                
+                generatedDataEl.appendChild(item);
+            });
+        }
+        
+        // 复制生成的数据
+        function copyGeneratedData() {
+            const generatedDataEl = document.getElementById('generated-data');
+            const items = generatedDataEl.querySelectorAll('div');
+            
+            if (items.length === 0) {
+                alert('没有可复制的数据');
+                return;
+            }
+            
+            let textToCopy = '';
+            items.forEach(item => {
+                const text = item.querySelector('.mt-2').textContent.replace(' - ', '-');
+                textToCopy += text + '\n';
+            });
+            
+            // 复制到剪贴板
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    alert('已复制到剪贴板！');
+                })
+                .catch(err => {
+                    console.error('复制失败: ', err);
+                    alert('复制失败，请手动复制');
+                });
+        }
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
